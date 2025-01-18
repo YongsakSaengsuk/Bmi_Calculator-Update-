@@ -11,7 +11,9 @@ class _BmiPageState extends State<BmiPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(body: Text("HEllo"),),
+      home: Scaffold(
+        body: Center(child: Text("BMI Calculator"),),
+      ),
     );
   }
 }
