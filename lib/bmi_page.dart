@@ -15,7 +15,7 @@ class _BmiPageState extends State<BmiPage> {
   late double weight;
   late double height;
   late double bmiValue = 0;
-  late int bmitype = 5 ;
+  late int bmitype = 5;
 
   void bmiCalculate() {
     final weightText = weightController.text;
@@ -36,15 +36,15 @@ class _BmiPageState extends State<BmiPage> {
         height = double.parse(heightText) / 100;
         bmiValue = weight / ((height * height));
         if (bmiValue < 18.5) {
-          bmitype = 0; // ต่ำกว่าเกณฑ์
+          bmitype = 0;
         } else if (bmiValue < 25) {
-          bmitype = 1; // น้ำหนักปกติ
+          bmitype = 1;
         } else if (bmiValue < 30) {
-          bmitype = 2; // น้ำหนักเกินเกณฑ์ ระดับ 1
+          bmitype = 2;
         } else if (bmiValue < 35) {
-          bmitype = 3; // น้ำหนักเกินเกณฑ์ ระดับ 2
+          bmitype = 3;
         } else {
-          bmitype = 4; // โรคอ้วน
+          bmitype = 4;
         }
       }
     });
@@ -55,16 +55,19 @@ class _BmiPageState extends State<BmiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            "BMI Calculator",
+          ),
+        ),
+      ),
       body: Container(
         padding: EdgeInsets.all(30),
         child: Center(
             child: SingleChildScrollView(
           child: Column(
             children: [
-              Text("BMI Calculator"),
-              SizedBox(
-                height: 20,
-              ),
               bmiGauges(bmiValue, bmitype),
               TextField(
                 controller: weightController,
