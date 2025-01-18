@@ -15,7 +15,7 @@ class _BmiPageState extends State<BmiPage> {
   late double weight;
   late double height;
   late double bmiValue = 0;
-  late int bmitype = 0;
+  late int bmitype = 5 ;
 
   void bmiCalculate() {
     final weightText = weightController.text;
