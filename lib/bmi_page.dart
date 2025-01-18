@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/model/bmidata.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -14,6 +15,8 @@ class _BmiPageState extends State<BmiPage> {
   late double weight;
   late double height;
   late double bmiValue = 0;
+  late int bmitype = 0;
+
   void bmiCalculate() {
     final weightText = weightController.text;
     final heightText = heightController.text;
@@ -32,6 +35,17 @@ class _BmiPageState extends State<BmiPage> {
         weight = double.parse(weightText);
         height = double.parse(heightText) / 100;
         bmiValue = weight / ((height * height));
+        if (bmiValue < 18.5) {
+          bmitype = 0; // ต่ำกว่าเกณฑ์
+        } else if (bmiValue < 25) {
+          bmitype = 1; // น้ำหนักปกติ
+        } else if (bmiValue < 30) {
+          bmitype = 2; // น้ำหนักเกินเกณฑ์ ระดับ 1
+        } else if (bmiValue < 35) {
+          bmitype = 3; // น้ำหนักเกินเกณฑ์ ระดับ 2
+        } else {
+          bmitype = 4; // โรคอ้วน
+        }
       }
     });
     weightController.clear();
@@ -51,7 +65,7 @@ class _BmiPageState extends State<BmiPage> {
               SizedBox(
                 height: 20,
               ),
-              bmiGauges(bmiValue),
+              bmiGauges(bmiValue, bmitype),
               TextField(
                 controller: weightController,
                 decoration: InputDecoration(labelText: 'น้ำหนัก(Kg.) :'),
@@ -77,7 +91,7 @@ class _BmiPageState extends State<BmiPage> {
   }
 }
 
-Widget bmiGauges(double bmiValue) {
+Widget bmiGauges(double bmiValue, int bmitype) {
   return SfRadialGauge(
     enableLoadingAnimation: true,
     title: GaugeTitle(text: bmiValue.toStringAsFixed(2)),
@@ -133,16 +147,28 @@ Widget bmiGauges(double bmiValue) {
             value: bmiValue, // เอาไว้ใส่ค่าที่ลูกสรชี้
             needleLength: 0.5,
             needleEndWidth: 10,
+            enableAnimation: true,
+            animationType: AnimationType.elasticOut,
+            animationDuration: 2500,
+            tailStyle: TailStyle(
+                color: Colors.red,
+                length: 0.4,
+                lengthUnit: GaugeSizeUnit.factor),
             knobStyle: KnobStyle(knobRadius: 0.1),
           )
         ],
         annotations: [
           GaugeAnnotation(
-            widget: Text("B"),
+            widget: Text(bmiLevels[bmitype].title),
             angle: 90,
             axisValue: 90,
             positionFactor: 0.2,
-          )
+          ),
+          GaugeAnnotation(
+            widget: Text(bmiLevels[bmitype].description),
+            positionFactor: 0.6,
+            angle: 90,
+          ),
         ],
       )
     ],
