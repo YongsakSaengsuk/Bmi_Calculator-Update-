@@ -88,6 +88,7 @@ Widget bmiGauges(double bmiValue) {
         minimum: 0,
         maximum: 40,
         showTicks: false,
+        showLabels: false,
         axisLineStyle:
             AxisLineStyle(thickness: 0.4, thicknessUnit: GaugeSizeUnit.factor),
         ranges: [
@@ -133,6 +134,14 @@ Widget bmiGauges(double bmiValue) {
             needleLength: 0.5,
             needleEndWidth: 10,
             knobStyle: KnobStyle(knobRadius: 0.1),
+          )
+        ],
+        annotations: [
+          GaugeAnnotation(
+            widget: Text("B"),
+            angle: 90,
+            axisValue: 90,
+            positionFactor: 0.2,
           )
         ],
       )
