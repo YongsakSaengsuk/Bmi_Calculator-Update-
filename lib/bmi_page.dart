@@ -9,21 +9,50 @@ class BmiPage extends StatefulWidget {
 }
 
 class _BmiPageState extends State<BmiPage> {
+  final TextEditingController weightController = TextEditingController();
+  final TextEditingController heightController = TextEditingController();
+  late double weight;
+  late double height;
+  void bmiCalculate() {
+    setState(() {
+      debugPrint(weightController.text);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          padding: EdgeInsets.all(50),
+          padding: EdgeInsets.all(30),
           child: Center(
-              child: Column(
-            children: [
-              Text("BMI Calculator"),
-              SizedBox(
-                height: 20,
-              ),
-              bmiGauges(),
-            ],
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Text("BMI Calculator"),
+                SizedBox(
+                  height: 20,
+                ),
+                bmiGauges(),
+                TextField(
+                  controller: weightController,
+                  decoration: InputDecoration(labelText: 'น้ำหนัก(Kg.) :'),
+                  keyboardType: TextInputType.numberWithOptions(),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                TextField(
+                  controller: heightController,
+                  decoration: InputDecoration(labelText: 'ส่วนสูง(cm.) :'),
+                  keyboardType: TextInputType.numberWithOptions(),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(onPressed: bmiCalculate, child: Text("Enter"))
+              ],
+            ),
           )),
         ),
       ),
