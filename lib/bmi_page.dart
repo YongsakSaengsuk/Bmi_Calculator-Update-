@@ -13,56 +13,74 @@ class _BmiPageState extends State<BmiPage> {
   final TextEditingController heightController = TextEditingController();
   late double weight;
   late double height;
+  late double bmiValue = 0;
   void bmiCalculate() {
+    final weightText = weightController.text;
+    final heightText = heightController.text;
     setState(() {
-      debugPrint(weightController.text);
+      if (weightText.isEmpty || heightText.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("กรุณากรอกข้อมูลให้ครบถ้วน")),
+        );
+      } else if (double.tryParse(weightText) == null ||
+          double.tryParse(heightText) == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("กรุณากรอกเฉพาะตัวเลข")),
+        );
+      } else {
+        // เมื่อค่าถูกต้อง
+        weight = double.parse(weightText);
+        height = double.parse(heightText) / 100;
+        bmiValue = weight / ((height * height));
+      }
     });
+    weightController.clear();
+    heightController.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Container(
-          padding: EdgeInsets.all(30),
-          child: Center(
-              child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Text("BMI Calculator"),
-                SizedBox(
-                  height: 20,
-                ),
-                bmiGauges(),
-                TextField(
-                  controller: weightController,
-                  decoration: InputDecoration(labelText: 'น้ำหนัก(Kg.) :'),
-                  keyboardType: TextInputType.numberWithOptions(),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                TextField(
-                  controller: heightController,
-                  decoration: InputDecoration(labelText: 'ส่วนสูง(cm.) :'),
-                  keyboardType: TextInputType.numberWithOptions(),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(onPressed: bmiCalculate, child: Text("Enter"))
-              ],
-            ),
-          )),
-        ),
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.all(30),
+        child: Center(
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text("BMI Calculator"),
+              SizedBox(
+                height: 20,
+              ),
+              bmiGauges(bmiValue),
+              TextField(
+                controller: weightController,
+                decoration: InputDecoration(labelText: 'น้ำหนัก(Kg.) :'),
+                keyboardType: TextInputType.numberWithOptions(),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              TextField(
+                controller: heightController,
+                decoration: InputDecoration(labelText: 'ส่วนสูง(cm.) :'),
+                keyboardType: TextInputType.numberWithOptions(),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(onPressed: bmiCalculate, child: Text("Enter"))
+            ],
+          ),
+        )),
       ),
     );
   }
 }
 
-Widget bmiGauges() {
+Widget bmiGauges(double bmiValue) {
   return SfRadialGauge(
     enableLoadingAnimation: true,
+    title: GaugeTitle(text: bmiValue.toStringAsFixed(2)),
     axes: [
       RadialAxis(
         startAngle: 180,
@@ -111,17 +129,10 @@ Widget bmiGauges() {
         ],
         pointers: [
           NeedlePointer(
-            value: 23, // เอาไว้ใส่ค่าที่ลูกสรชี้
+            value: bmiValue, // เอาไว้ใส่ค่าที่ลูกสรชี้
             needleLength: 0.5,
             needleEndWidth: 10,
             knobStyle: KnobStyle(knobRadius: 0.1),
-          )
-        ],
-        annotations: [
-          GaugeAnnotation(
-            widget: Text('BMI'),
-            positionFactor: 0.2,
-            angle: 90,
           )
         ],
       )
