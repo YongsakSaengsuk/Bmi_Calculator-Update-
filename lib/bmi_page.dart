@@ -69,8 +69,10 @@ class _BmiPageState extends State<BmiPage> {
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(
-              blurRadius: 10.0,
-              spreadRadius: 4.0,
+              color: const Color.fromARGB(255, 199, 199, 199),
+              offset: Offset(6, 0),
+              spreadRadius: 2,
+              blurRadius: 15,
             ),
             BoxShadow(
               color: Colors.white,
