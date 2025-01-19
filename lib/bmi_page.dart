@@ -50,6 +50,7 @@ class _BmiPageState extends State<BmiPage> {
     });
     weightController.clear();
     heightController.clear();
+    FocusScope.of(context).unfocus();
   }
 
   @override
@@ -66,7 +67,7 @@ class _BmiPageState extends State<BmiPage> {
         padding: EdgeInsets.all(30),
         child: Center(
             child: Container(
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(20),
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(
               color: const Color.fromARGB(255, 199, 199, 199),
@@ -82,23 +83,52 @@ class _BmiPageState extends State<BmiPage> {
             child: Column(
               children: [
                 bmiGauges(bmiValue, bmitype),
-                TextField(
-                  controller: weightController,
-                  decoration: InputDecoration(labelText: 'น้ำหนัก(Kg.) :'),
-                  keyboardType: TextInputType.numberWithOptions(),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                TextField(
-                  controller: heightController,
-                  decoration: InputDecoration(labelText: 'ส่วนสูง(cm.) :'),
-                  keyboardType: TextInputType.numberWithOptions(),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: const Color.fromARGB(255, 123, 120, 120),
+                          offset: Offset(-1, -1)),
+                      BoxShadow(
+                        color: Colors.white,
+                        spreadRadius: 3,
+                        blurRadius: 5,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: weightController,
+                        decoration:
+                            InputDecoration(labelText: 'น้ำหนัก(Kg.) :'),
+                        keyboardType: TextInputType.numberWithOptions(),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      TextField(
+                        controller: heightController,
+                        decoration:
+                            InputDecoration(labelText: 'ส่วนสูง(cm.) :'),
+                        keyboardType: TextInputType.numberWithOptions(),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                ElevatedButton(onPressed: bmiCalculate, child: Text("Enter"))
+                ElevatedButton(
+                  onPressed: bmiCalculate,
+                  style: ButtonStyle(
+                    overlayColor: WidgetStatePropertyAll(Colors.blueAccent),
+                    animationDuration: Duration(seconds: 1),
+                  ),
+                  child: Text("Enter"),
+                )
               ],
             ),
           ),
@@ -176,15 +206,36 @@ Widget bmiGauges(double bmiValue, int bmitype) {
         ],
         annotations: [
           GaugeAnnotation(
-            widget: Text(bmiLevels[bmitype].title),
             angle: 90,
             axisValue: 90,
             positionFactor: 0.2,
+            widget: Text(bmiLevels[bmitype].title),
           ),
           GaugeAnnotation(
-            widget: Text(bmiLevels[bmitype].description),
-            positionFactor: 0.6,
+            positionFactor: 0.7,
             angle: 90,
+            widget: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: const Color.fromARGB(255, 123, 120, 120),
+                      offset: Offset(-1, -1)),
+                  BoxShadow(
+                    color: Colors.white,
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                  ),
+                ],
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                bmiLevels[bmitype].description == ""
+                    ? "BMI Calculator"
+                    : bmiLevels[bmitype].description,
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
         ],
       )
