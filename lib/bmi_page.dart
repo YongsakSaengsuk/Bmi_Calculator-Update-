@@ -65,28 +65,40 @@ class _BmiPageState extends State<BmiPage> {
       body: Container(
         padding: EdgeInsets.all(30),
         child: Center(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              bmiGauges(bmiValue, bmitype),
-              TextField(
-                controller: weightController,
-                decoration: InputDecoration(labelText: 'น้ำหนัก(Kg.) :'),
-                keyboardType: TextInputType.numberWithOptions(),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              TextField(
-                controller: heightController,
-                decoration: InputDecoration(labelText: 'ส่วนสูง(cm.) :'),
-                keyboardType: TextInputType.numberWithOptions(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              ElevatedButton(onPressed: bmiCalculate, child: Text("Enter"))
-            ],
+            child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+              blurRadius: 10.0,
+              spreadRadius: 4.0,
+            ),
+            BoxShadow(
+              color: Colors.white,
+            ),
+          ], borderRadius: BorderRadius.circular(20)),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                bmiGauges(bmiValue, bmitype),
+                TextField(
+                  controller: weightController,
+                  decoration: InputDecoration(labelText: 'น้ำหนัก(Kg.) :'),
+                  keyboardType: TextInputType.numberWithOptions(),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                TextField(
+                  controller: heightController,
+                  decoration: InputDecoration(labelText: 'ส่วนสูง(cm.) :'),
+                  keyboardType: TextInputType.numberWithOptions(),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(onPressed: bmiCalculate, child: Text("Enter"))
+              ],
+            ),
           ),
         )),
       ),
