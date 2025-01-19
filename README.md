@@ -30,7 +30,9 @@ Planned improvements for future versions:
 The application is hosted on GitHub Pages. You can access the demo [here](https://yongsaksaengsuk.github.io/Bmi_Calculator_DEMO/).
 
 ## Screenshots
-(Include screenshots of the application here if available.)
+![Screenshot 1](screenshots/Screenshot%202025-01-20%20021714.png)
+![Screenshot 2](screenshots/Screenshot%202025-01-20%20021823.png)
+![Screenshot 3](screenshots/Screenshot%202025-01-20%20021848.png)
 
 ## Contributing
 If you'd like to contribute to this project, feel free to:
@@ -39,7 +41,8 @@ If you'd like to contribute to this project, feel free to:
 - Submit pull requests.
 
 ## License
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 
 ---
 
